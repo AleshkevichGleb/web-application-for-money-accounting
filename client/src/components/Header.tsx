@@ -1,9 +1,23 @@
 import { FC } from 'react';
 import { FaBtc, FaSignOutAlt } from "react-icons/fa";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { removeTokenFromLocaleStorage } from '../helpers/localestorage.helper';
+import { useAppDispatch } from '../hooks/redux-hooks';
+import { useAuth } from '../hooks/useAuth';
+import { logout } from '../store/user/user.slice';
 
 const Header:FC = () => {
-    const isAuth = false;
+    const isAuth = useAuth();
+    const navigate = useNavigate();
+
+    const dispatch = useAppDispatch();
+    const logoutHandler = () => {
+        dispatch(logout())
+        removeTokenFromLocaleStorage('token');
+        toast.success('You logget out');
+        navigate('/')
+    }
     return (
         <header className='flex items-center bg-slate-800 p-4 shadow-sm backdrop-blur-sm'>
             <Link to = '/'>
@@ -45,7 +59,7 @@ const Header:FC = () => {
 
             {
                 isAuth 
-                ?   (<button className='btn btn-red'>
+                ?   (<button className='btn btn-red' onClick={logoutHandler}>
                         <span>Log out</span>
                         <FaSignOutAlt/>
                     </button>)
