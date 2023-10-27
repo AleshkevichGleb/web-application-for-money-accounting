@@ -6,7 +6,6 @@ import { removeTokenFromLocaleStorage } from '../helpers/localestorage.helper';
 import { useAppDispatch } from '../hooks/redux-hooks';
 import { useAuth } from '../hooks/useAuth';
 import { logout } from '../store/user/user.slice';
-
 const Header:FC = () => {
     const isAuth = useAuth();
     const navigate = useNavigate();

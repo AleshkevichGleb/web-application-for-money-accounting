@@ -9,7 +9,7 @@ import { login } from '../store/user/user.slice';
 const Auth:FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const [isLogin, setIsLogin] = useState<boolean>(true);
     
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -36,6 +36,7 @@ const Auth:FC = () => {
             const data = await AuthService.registration({email, password})
             if(data) {
                 toast.success('Account has been created.');
+                setTokenToLocaleStorage('token', data.token)
                 setIsLogin(!isLogin);
             }
         } catch(err: any) {
