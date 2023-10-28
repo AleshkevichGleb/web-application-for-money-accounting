@@ -48,7 +48,6 @@ const Categories:FC = () => {
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [visibleModal, setVisibleModal] = useState<boolean>(false);
 
-
     return (
         <>
             <div className='mt-10 rounded-md bg-slate-800 p-4'> 
@@ -85,7 +84,8 @@ const Categories:FC = () => {
                         setIsEdit(false);
                     }} 
                     className='max-w-fit flex items-center gap-2 text-white/50 mt-5 hover:text-white'>
-                    <FaPlus/>
+                    <FaPlus
+                />
                     <span>Create a new category</span>
                 </button>
             </div>
