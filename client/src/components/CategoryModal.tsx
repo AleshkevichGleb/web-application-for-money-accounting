@@ -9,8 +9,6 @@ interface CategoryModalProps {
 }
 
 const CategoryModal: FC<CategoryModalProps> = ({type, id, setVisibleModal}) => {
-    console.log(type);
-    
     const handleSubmit = () => {
         setVisibleModal(false);
         toast.success(`You ${type === 'post' ? 'created a new ' : 'updated a '}post`)
@@ -31,6 +29,7 @@ const CategoryModal: FC<CategoryModalProps> = ({type, id, setVisibleModal}) => {
                         type="text" 
                         name="title"
                         placeholder='Title...'
+                        autoFocus
                     />
                     <input type="hidden" value={id} name = 'id'/>
                 </label>

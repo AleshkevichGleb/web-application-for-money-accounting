@@ -21,8 +21,14 @@ export interface IResponseUserData {
     user: IResponseUser,    
 }
 
-export interface ITransactions {
-
+export interface ITransaction {
+    amount: number,
+    createdAt: string,
+    updatedAt: string,
+    title: string,
+    type: string,
+    id: number,
+    category: ICategoryWoutTransactions,
 }
 export interface ICategory {
     title: string,
@@ -32,6 +38,9 @@ export interface ICategory {
     transactions: any[],
 }
 
+export interface ICategoryWoutTransactions extends Omit<ICategory, 'transactions'> {}
+
 export interface IResponseTransactionLoader {
     categories: ICategory[],
+    transactions: ITransaction[],
 }

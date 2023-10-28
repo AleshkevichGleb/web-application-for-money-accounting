@@ -1,35 +1,62 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { Form, useLoaderData } from 'react-router-dom';
 import { IResponseTransactionLoader } from '../types/types';
+import CategoryModal from './CategoryModal';
+
+interface IFormData {
+    title: string,
+    amount: undefined | number,
+}
 
 const TransactionForm:FC = () => {
-    const { categories } = useLoaderData() as IResponseTransactionLoader;
+    const {categories} = useLoaderData() as IResponseTransactionLoader;
+    const [visibleModal, setVisibleModal] = useState<boolean>(false);
+    const [formData, setFormData] = useState({
+        title: '',
+        amount: '',
+    });
+
+    const handleFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const {name, value} = e.target
+        setFormData({...formData, [name]: value })
+
+    }
+    const handleSubmit = (): void => {
+        setFormData({
+            title: '',
+            amount: '',
+        })
+    }   
     return (
         <div className='rounded-md bg-slate-800 p-4'> 
             <Form 
+                onSubmit={handleSubmit}
                 className='grid gap-2'
                 method='post'
                 action = '/transactions'
             >
                 <label className='grid' htmlFor="title">
-                    <span>Title</span>
                     <input 
                         type="text" 
                         className='input' 
                         placeholder='Title...' 
                         name='title' 
                         required
+                        // value={formData.title}
+                        // onChange={handleFormData}
                     />
                 </label>
                 <label className='grid' htmlFor="amount">
-                    <span>Title</span>
                     <input 
-                        type="number" 
+                        type='number' 
                         className='input' 
                         placeholder='Amount...' 
                         name='amount' 
                         required
+                        // value={formData.amount}
+                        // onChange={handleFormData}
                     />
                 </label>
                 
@@ -37,21 +64,21 @@ const TransactionForm:FC = () => {
                     <label htmlFor="category" className='grid'>
                         <span>Category</span>
                         <select className='input' name="category" required>
-                            <option value="1">Salary</option>
-                            <option value="2">Gift</option>
-                            <option value="3">Grocery</option>
+                            {categories.map((category) => (
+                                <option key={category.id} value={category.id}>{category.title}</option>
+                            ))}
                         </select>
                     </label> )
-                :   <h2>To continue create a category first</h2>
+                :   <h2 className='mt-1 text-red-300'>To continue create a category first</h2>
                 }
 
                 <button onClick={() => {
                         
                     }} 
-                    className='max-w-fit flex items-center gap-2 text-white/50 mt-2 hover:text-white'>
+                    className='max-w-fit flex items-center gap-2 text-white/50 hover:text-white'>
                     <FaPlus
                 />
-                    <span>Manage Categories:</span>
+                    <span onClick={() => setVisibleModal(true) }>Manage Categories:</span>
                 </button>
                 
                 <div className='flex gap-4 items-center'>
@@ -61,7 +88,6 @@ const TransactionForm:FC = () => {
                             name="type"
                             value={'income'}
                             className='form-radio text-blue-600'
-                            checked
                         />
                         <span>Income</span>
                     </label>
@@ -78,6 +104,9 @@ const TransactionForm:FC = () => {
 
                 <button className='btn btn-green max-w-fit mt-2'>Submit</button>
             </Form>
+            {
+                visibleModal && <CategoryModal type="post" setVisibleModal={setVisibleModal}/> 
+            }
         </div>
     );
 };
