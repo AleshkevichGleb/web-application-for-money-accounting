@@ -43,4 +43,6 @@ export interface ICategoryWoutTransactions extends Omit<ICategory, 'transactions
 export interface IResponseTransactionLoader {
     categories: ICategory[],
     transactions: ITransaction[],
+    totalIncome: number,
+    totalExpense: number,
 }

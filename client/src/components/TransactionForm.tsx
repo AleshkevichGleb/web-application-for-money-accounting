@@ -44,8 +44,8 @@ const TransactionForm:FC = () => {
                         placeholder='Title...' 
                         name='title' 
                         required
-                        // value={formData.title}
-                        // onChange={handleFormData}
+                        value={formData.title}
+                        onChange={handleFormData}
                     />
                 </label>
                 <label className='grid' htmlFor="amount">
@@ -55,8 +55,8 @@ const TransactionForm:FC = () => {
                         placeholder='Amount...' 
                         name='amount' 
                         required
-                        // value={formData.amount}
-                        // onChange={handleFormData}
+                        value={formData.amount}
+                        onChange={handleFormData}
                     />
                 </label>
                 
@@ -88,6 +88,7 @@ const TransactionForm:FC = () => {
                             name="type"
                             value={'income'}
                             className='form-radio text-blue-600'
+                            required
                         />
                         <span>Income</span>
                     </label>
@@ -97,6 +98,7 @@ const TransactionForm:FC = () => {
                             name="type"
                             value={'expense'}
                             className='form-radio text-blue-600'
+                            required
                         />
                         <span>Expense</span>
                     </label>
